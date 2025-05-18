@@ -53,7 +53,7 @@ resource "digitalocean_project_resources" "tailscale" {
 # Make the shell script executable
 resource "null_resource" "make_script_executable" {
   provisioner "local-exec" {
-    command = "chmod +x ${path.module}/gen_tailscale_api_key.sh"
+    command = "chmod +x ${path.module}/gen_tailscale_auth_key.sh"
   }
 }
 
@@ -62,11 +62,11 @@ resource "null_resource" "generate_tailscale_key" {
   depends_on = [null_resource.make_script_executable]
 
   provisioner "local-exec" {
-    command = "${path.module}/en_tailscale_api_key.sh | jq .'key' | tr -d '\"'"
+    command = "${path.module}/en_tailscale_auth_key.sh | jq .'key' | tr -d '\"'"
   }
 
   # Store the output in a local file
   provisioner "local-exec" {
-    command = "${path.module}/gen_tailscale_api_key.sh | jq .'key' | tr -d '\"' > /tmp/tailscale_key.txt"
+    command = "${path.module}/gen_tailscale_auth_key.sh | jq .'key' | tr -d '\"' > /tmp/tailscale_key.txt"
   }
 }
