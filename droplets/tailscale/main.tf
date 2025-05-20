@@ -6,10 +6,10 @@ resource "digitalocean_project" "tailscale" {
   environment = var.project_environment
 }
 
-#resource "digitalocean_ssh_key" "tailscale" {
-#  name       = local.do_ssh_key_name
-#  public_key = file(var.public_key_location)
-#}
+resource "digitalocean_ssh_key" "tailscale" {
+  name       = local.do_ssh_key_name
+  public_key = file(var.public_key_location)
+}
 
 resource "digitalocean_droplet" "tailscale" {
   image  = data.digitalocean_image.ubuntu.slug
