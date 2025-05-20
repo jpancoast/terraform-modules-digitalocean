@@ -67,6 +67,6 @@ resource "null_resource" "generate_tailscale_key" {
 
   # Store the output in a local file
   provisioner "local-exec" {
-    command = "${path.module}/gen_tailscale_auth_key.sh | jq .'key' | tr -d '\"' > /tmp/tailscale_key.txt"
+    command = "${path.module}/gen_tailscale_auth_key.sh | jq .'key' | tr -d '\"' > tailscale_key.txt"
   }
 }
