@@ -45,6 +45,7 @@ resource "digitalocean_droplet" "tailscale" {
 
 resource "digitalocean_project_resources" "tailscale" {
   project = digitalocean_project.tailscale.id
+
   resources = [
     digitalocean_droplet.tailscale.urn
   ]
