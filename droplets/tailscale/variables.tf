@@ -7,13 +7,13 @@ variable "droplet_size" {
   type = string
 }
 
-variable "public_key_location" {
-  type = string
-}
-
-variable "private_key_location" {
-  type = string
-}
+#variable "public_key_location" {
+#  type = string
+#}
+#
+#variable "private_key_location" {
+#  type = string
+#}
 
 variable "project_environment" {
   type = string
