@@ -41,3 +41,14 @@ variable "graceful_shutdown" {
   type    = bool
   default = true
 }
+
+variable "tailscale_tailnet" {
+  type        = string
+  description = "The Tailscale tailnet name"
+}
+
+variable "tailscale_api_token" {
+  type        = string
+  description = "The Tailscale API token"
+  sensitive   = true
+}

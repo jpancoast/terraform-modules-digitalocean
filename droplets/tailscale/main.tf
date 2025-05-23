@@ -64,10 +64,18 @@ resource "null_resource" "generate_tailscale_key" {
 
   provisioner "local-exec" {
     command = "${path.module}/gen_tailscale_auth_key.sh | jq .'key' | tr -d '\"'"
+    environment = {
+      TAILSCALE_TAILNET   = var.tailscale_tailnet
+      TAILSCALE_API_TOKEN = var.tailscale_api_token
+    }
   }
 
   # Store the output in a local file
   provisioner "local-exec" {
     command = "${path.module}/gen_tailscale_auth_key.sh | jq .'key' | tr -d '\"' > /tmp/tailscale_key.txt"
+    environment = {
+      TAILSCALE_TAILNET   = var.tailscale_tailnet
+      TAILSCALE_API_TOKEN = var.tailscale_api_token
+    }
   }
 }
