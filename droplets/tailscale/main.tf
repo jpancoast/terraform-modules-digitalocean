@@ -12,7 +12,7 @@ resource "digitalocean_ssh_key" "tailscale" {
 }
 
 resource "digitalocean_droplet" "tailscale" {
-  image             = data.digitalocean_image.ubuntu.slug
+  image             = data.digitalocean_images.ubuntu_lts.images[0].slug
   name              = local.droplet_name
   region            = var.droplet_region
   size              = var.droplet_size

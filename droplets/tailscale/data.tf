@@ -1,6 +1,22 @@
 
-data "digitalocean_image" "ubuntu" {
-  slug = "ubuntu-24-10-x64"
+data "digitalocean_images" "ubuntu_lts" {
+  filter {
+    key    = "distribution"
+    values = ["Ubuntu"]
+  }
+  filter {
+    key    = "type"
+    values = ["distribution"]
+  }
+  filter {
+    key      = "name"
+    values   = ["LTS x64$"]
+    match_by = "re"
+  }
+  sort {
+    key       = "created"
+    direction = "desc"
+  }
 }
 
 data "digitalocean_regions" "available" {
