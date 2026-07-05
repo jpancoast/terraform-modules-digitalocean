@@ -10,7 +10,7 @@ data "digitalocean_images" "ubuntu_lts" {
   }
   filter {
     key      = "name"
-    values   = ["LTS x64$"]
+    values   = ["\\(LTS\\) x64$"]
     match_by = "re"
   }
   sort {
