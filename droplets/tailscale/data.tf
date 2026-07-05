@@ -4,10 +4,10 @@ data "digitalocean_images" "ubuntu_lts" {
     key    = "distribution"
     values = ["Ubuntu"]
   }
-  filter {
-    key    = "type"
-    values = ["distribution"]
-  }
+  #  filter {
+  #    key    = "type"
+  #    values = ["distribution"]
+  #  }
   #  filter {
   #    key      = "name"
   #    values   = ["\\(LTS\\) x64$"]
