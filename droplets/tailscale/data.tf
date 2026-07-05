@@ -8,11 +8,11 @@ data "digitalocean_images" "ubuntu_lts" {
     key    = "type"
     values = ["distribution"]
   }
-  filter {
-    key      = "name"
-    values   = ["\\(LTS\\) x64$"]
-    match_by = "re"
-  }
+  #  filter {
+  #    key      = "name"
+  #    values   = ["\\(LTS\\) x64$"]
+  #    match_by = "re"
+  #  }
   sort {
     key       = "created"
     direction = "desc"
