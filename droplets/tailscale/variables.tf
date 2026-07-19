@@ -11,20 +11,9 @@ variable "public_key_location" {
   type = string
 }
 
-variable "project_environment" {
-  type = string
-}
-
 variable "project_name" {
-  type = string
-}
-
-variable "project_description" {
-  type = string
-}
-
-variable "project_purpose" {
-  type = string
+  type        = string
+  description = "Name of the existing DigitalOcean project (created by the do-projects stack) to attach the droplet to."
 }
 
 variable "droplet_name" {

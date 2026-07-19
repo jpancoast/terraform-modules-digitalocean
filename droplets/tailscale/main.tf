@@ -1,11 +1,4 @@
 
-resource "digitalocean_project" "tailscale" {
-  name        = var.project_name
-  description = var.project_description
-  purpose     = var.project_purpose
-  environment = var.project_environment
-}
-
 resource "digitalocean_ssh_key" "tailscale" {
   name       = local.do_ssh_key_name
   public_key = file(var.public_key_location)
@@ -44,7 +37,7 @@ resource "digitalocean_droplet" "tailscale" {
 }
 
 resource "digitalocean_project_resources" "tailscale" {
-  project = digitalocean_project.tailscale.id
+  project = data.digitalocean_project.tailscale.id
 
   resources = [
     digitalocean_droplet.tailscale.urn
