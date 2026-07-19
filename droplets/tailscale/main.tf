@@ -49,6 +49,9 @@ resource "tailscale_tailnet_key" "tailscale" {
   reusable      = false
   ephemeral     = false
   preauthorized = true
-  expiry        = 360
-  description   = "auth key for ${local.droplet_name} exit node"
+  # Must still be valid when the droplet finishes its apt upgrade/install and
+  # first runs `tailscale up` (several minutes after this key is created), so
+  # give it a wide margin. 1 hour.
+  expiry      = 3600
+  description = "auth key for ${local.droplet_name} exit node"
 }
