@@ -43,6 +43,12 @@ variable "graceful_shutdown" {
   default = true
 }
 
+variable "assign_public_ip" {
+  type        = bool
+  default     = false
+  description = "Whether to give the droplet a public IPv4 address."
+}
+
 variable "tailscale_api_token" {
   type        = string
   description = "The Tailscale API token"

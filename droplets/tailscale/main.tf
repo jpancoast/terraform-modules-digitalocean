@@ -11,6 +11,7 @@ resource "digitalocean_droplet" "tailscale" {
   size              = var.droplet_size
   ssh_keys          = [digitalocean_ssh_key.tailscale.fingerprint]
   graceful_shutdown = var.graceful_shutdown
+  public_networking = var.assign_public_ip
 
   user_data = <<-EOF
     #!/bin/bash
