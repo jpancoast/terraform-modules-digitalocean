@@ -4,15 +4,18 @@ data "digitalocean_images" "ubuntu_lts" {
     key    = "distribution"
     values = ["Ubuntu"]
   }
-  #  filter {
-  #    key    = "type"
-  #    values = ["distribution"]
-  #  }
-  #  filter {
-  #    key      = "name"
-  #    values   = ["\\(LTS\\) x64$"]
-  #    match_by = "re"
-  #  }
+  # Restrict to base OS distribution images so Marketplace one-click app images
+  # (e.g. "WordPress on Ubuntu") are excluded.
+  filter {
+    key    = "type"
+    values = ["distribution"]
+  }
+  # Keep to LTS releases only (names look like "24.04 (LTS) x64").
+  filter {
+    key      = "name"
+    values   = ["\\(LTS\\) x64$"]
+    match_by = "re"
+  }
   sort {
     key       = "created"
     direction = "desc"
