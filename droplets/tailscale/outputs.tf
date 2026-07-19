@@ -1,8 +1,7 @@
 
-# Direct SSH over the public IP, using the private key that pairs with
-# public_key_location (same path with the .pub suffix stripped).
+# Direct SSH over the public IP, using the local private key.
 output "ssh_command" {
-  value = "ssh -o IdentitiesOnly=yes -i ${replace(var.public_key_location, ".pub", "")} ${var.ssh_user}@${digitalocean_droplet.tailscale.ipv4_address}"
+  value = "ssh -o IdentitiesOnly=yes -i ${var.ssh_private_key_location} ${var.ssh_user}@${digitalocean_droplet.tailscale.ipv4_address}"
 }
 
 # SSH over Tailscale by node name (Tailscale SSH is enabled on the droplet).
