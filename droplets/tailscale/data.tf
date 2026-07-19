@@ -26,11 +26,6 @@ data "digitalocean_regions" "available" {
   }
 }
 
-data "local_file" "tailscale_key" {
-  depends_on = [null_resource.generate_tailscale_key]
-  filename   = "./tailscale_key.txt"
-}
-
 data "digitalocean_project" "tailscale" {
   name = var.project_name
 }

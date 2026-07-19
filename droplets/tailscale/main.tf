@@ -31,7 +31,7 @@ resource "digitalocean_droplet" "tailscale" {
     sysctl -p /etc/sysctl.conf
     NETDEV=$(ip -o route get 8.8.8.8 | cut -f 5 -d " ")
     sudo ethtool -K $NETDEV rx-udp-gro-forwarding on rx-gro-list off
-    tailscale up --advertise-exit-node --auth-key=${data.local_file.tailscale_key.content}
+    tailscale up --advertise-exit-node --auth-key=${tailscale_tailnet_key.tailscale.key}
     tailscale set --ssh
   EOF
 }
@@ -44,31 +44,11 @@ resource "digitalocean_project_resources" "tailscale" {
   ]
 }
 
-# Make the shell script executable
-resource "null_resource" "make_script_executable" {
-  provisioner "local-exec" {
-    command = "chmod +x ${path.module}/gen_tailscale_auth_key.sh"
-  }
-}
-
-# Generate Tailscale API key
-resource "null_resource" "generate_tailscale_key" {
-  depends_on = [null_resource.make_script_executable]
-
-  provisioner "local-exec" {
-    command = "${path.module}/gen_tailscale_auth_key.sh | jq .'key' | tr -d '\"'"
-    environment = {
-      TAILSCALE_TAILNET   = var.tailscale_tailnet
-      TAILSCALE_API_TOKEN = var.tailscale_api_token
-    }
-  }
-
-  # Store the output in a local file
-  provisioner "local-exec" {
-    command = "${path.module}/gen_tailscale_auth_key.sh | jq .'key' | tr -d '\"' > ./tailscale_key.txt"
-    environment = {
-      TAILSCALE_TAILNET   = var.tailscale_tailnet
-      TAILSCALE_API_TOKEN = var.tailscale_api_token
-    }
-  }
+# Generate a Tailscale auth key used by the droplet to join the tailnet on boot.
+resource "tailscale_tailnet_key" "tailscale" {
+  reusable      = false
+  ephemeral     = false
+  preauthorized = true
+  expiry        = 360
+  description   = "auth key for ${local.droplet_name} exit node"
 }
