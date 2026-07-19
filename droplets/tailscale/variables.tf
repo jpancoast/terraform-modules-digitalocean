@@ -17,6 +17,12 @@ variable "public_key_location" {
   type = string
 }
 
+variable "ssh_private_key_location" {
+  type        = string
+  default     = "/Users/jpancoast/.ssh/droplet"
+  description = "Local path to the private SSH key, used to build the public-IP ssh_command output."
+}
+
 variable "project_name" {
   type        = string
   description = "Name of the existing DigitalOcean project (created by the do-projects stack) to attach the droplet to."

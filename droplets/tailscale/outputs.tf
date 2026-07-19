@@ -1,4 +1,9 @@
 
+# Direct SSH over the public IP, only when the droplet has one.
+output "ssh_command" {
+  value = var.assign_public_ip ? "ssh -o IdentitiesOnly=yes -i ${var.ssh_private_key_location} ${var.ssh_user}@${digitalocean_droplet.tailscale.ipv4_address}" : null
+}
+
 # SSH over Tailscale by node name (Tailscale SSH is enabled on the droplet).
 output "tailscale_ssh_command" {
   value = "tailscale ssh ${var.ssh_user}@${local.droplet_name}"
